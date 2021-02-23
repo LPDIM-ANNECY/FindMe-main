@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style
+        name="title">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/title</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_connection">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/connection</item>
+    </style>
+
+    <style
+        name="button_connection">
+        <item name="android:textSize">@dimen/button_label</item>
+        <item name="android:layout_width">250dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="shapeAppearanceOverlay">@drawable/rounded_button</item>
+    </style>
+
+</resources>
