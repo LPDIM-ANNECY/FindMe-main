@@ -3,4 +3,8 @@
     <string name="skip_connection">Passer la connexion</string>
     <string name="connection">Se connecter</string>
     <string name="register">S\'enregistrer</string>
+    <string name="or">ou</string>
+    <string name="hint_pseudo">Pseudo</string>
+    <string name="hint_password">Mot de passe</string>
+    <string name="hint_email">Adresse mail</string>
 </resources>
