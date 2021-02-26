@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_navigation"
-    app:startDestination="@id/registerFragment">
+    app:startDestination="@id/connectionFragment">
 
     <fragment
-        android:id="@+id/registerFragment"
-        android:name="fr.test200.findme.register.RegisterFragment"
+        android:id="@+id/connectionFragment"
+        android:name="fr.test200.findme.connection.ConnectionFragment"
         android:label="RegisterFragment" />
 </navigation>

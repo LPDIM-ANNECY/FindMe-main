@@ -6,13 +6,13 @@ import kotlinx.coroutines.launch
 class RegisterViewModel : ViewModel() {
 
     //region Event
-    private val _eventTryConnection = MutableLiveData<Boolean>()
-    val eventTryConnection: LiveData<Boolean>
-        get() = _eventTryConnection
+    private val _eventTryRegister = MutableLiveData<Boolean>()
+    val eventTryRegister: LiveData<Boolean>
+        get() = _eventTryRegister
     //endregion
 
     init {
-        _eventTryConnection.value = false
+        _eventTryRegister.value = false
     }
 
     /**

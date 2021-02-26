@@ -6,13 +6,13 @@ import kotlinx.coroutines.launch
 class LoginViewModel : ViewModel() {
 
     //region Event
-    private val _eventTryConnection = MutableLiveData<Boolean>()
-    val eventTryConnection: LiveData<Boolean>
-        get() = _eventTryConnection
+    private val _eventTryLogin = MutableLiveData<Boolean>()
+    val eventTryLogin: LiveData<Boolean>
+        get() = _eventTryLogin
     //endregion
 
     init {
-        _eventTryConnection.value = false
+        _eventTryLogin.value = false
     }
 
     /**
