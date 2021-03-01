@@ -22,10 +22,7 @@ class ItineraryListViewModel : ViewModel() {
             val isLogin = FindMeApi.userService.getPlaceList()
             isLogin?.let {
                 if (it.isSuccessful){
-                    Log.d("TAG", it.body().toString())
                     _listPlace.value = it.body()
-                } else {
-                    Log.d("TAG", "marche pas")
                 }
             }
         }
