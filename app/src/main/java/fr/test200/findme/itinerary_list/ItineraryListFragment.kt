@@ -41,6 +41,14 @@ class ItineraryList : Fragment() {
             onBackPressed()
         }
 
+        viewModel.getPlaceList()
+
+        //region Observer
+        viewModel.listPlace.observe(viewLifecycleOwner, {
+            createPlaceCards(it)
+        })
+        //endregion
+
         return binding.root
     }
 
@@ -60,7 +68,7 @@ class ItineraryList : Fragment() {
         placeList.forEach {
             val placeCard = inflater.inflate(R.layout.place_card,null) as CardView
 
-            //placeCard.findViewById<TextView>(R.id.user_name).text = it.name
+            placeCard.findViewById<TextView>(R.id.user_name).text = it.name
             //placeCard.findViewById<TextView>(R.id.user_status).text = it.score.toString()
 
             placeCard.cardElevation = 10F

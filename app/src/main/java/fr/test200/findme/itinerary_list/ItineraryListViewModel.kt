@@ -1,12 +1,35 @@
 package fr.test200.findme.itinerary_list
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import fr.test200.findme.Place
+import fr.test200.findme.network.FindMeApi
+import kotlinx.coroutines.launch
 
 class ItineraryListViewModel : ViewModel() {
 
-    init {}
+    //region Data
+    private val _listPlace = MutableLiveData<List<Place>>()
+    val listPlace: LiveData<List<Place>>
+        get() = _listPlace
+    //endregion
+
+    fun getPlaceList() {
+        viewModelScope.launch {
+            val isLogin = FindMeApi.userService.getPlaceList()
+            isLogin?.let {
+                if (it.isSuccessful){
+                    Log.d("TAG", it.body().toString())
+                    _listPlace.value = it.body()
+                } else {
+                    Log.d("TAG", "marche pas")
+                }
+            }
+        }
+    }
 
     /**
      * Callback called when the ViewModel is destroyed
