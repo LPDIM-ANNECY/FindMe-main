@@ -8,6 +8,7 @@ import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import fr.test200.findme.R
 import fr.test200.findme.databinding.LoginFragmentBinding
 
@@ -32,6 +33,14 @@ class LoginFragment : Fragment() {
         binding.loginViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         //endregion
+
+        binding.btnConnection.setOnClickListener {
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToConnectionFragment())
+        }
+
+        binding.btnRegister.setOnClickListener {
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+        }
 
         // event back pressed
         requireActivity().onBackPressedDispatcher.addCallback(this) {

@@ -8,9 +8,11 @@ import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import fr.test200.findme.R
 import fr.test200.findme.databinding.ConnectionFragmentBinding
 import fr.test200.findme.databinding.RegisterFragmentBinding
+import fr.test200.findme.login.LoginFragmentDirections
 
 class ConnectionFragment : Fragment() {
 
@@ -37,6 +39,10 @@ class ConnectionFragment : Fragment() {
         // event back pressed
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             onBackPressed()
+        }
+
+        binding.btnConnection.setOnClickListener {
+            findNavController().navigate(ConnectionFragmentDirections.actionConnectionFragmentToItineraryList())
         }
 
         return binding.root

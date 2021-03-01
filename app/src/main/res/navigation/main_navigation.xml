@@ -1,10 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_navigation"
-    app:startDestination="@id/connectionFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/connectionFragment"
         android:name="fr.test200.findme.connection.ConnectionFragment"
-        android:label="RegisterFragment" />
+        android:label="RegisterFragment"
+        tools:layout="@layout/register_fragment">
+        <action
+            android:id="@+id/action_connectionFragment_to_itinerary_list"
+            app:destination="@id/itinerary_list" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="fr.test200.findme.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/login_fragment">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_connectionFragment"
+            app:destination="@id/connectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="fr.test200.findme.register.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/register_fragment">
+        <action
+            android:id="@+id/action_registerFragment_to_itinerary_list"
+            app:destination="@id/itinerary_list" />
+    </fragment>
+    <fragment
+        android:id="@+id/itinerary_list"
+        android:name="fr.test200.findme.itinerary_list.ItineraryList"
+        android:label="Itinerary_list"
+        tools:layout="@layout/itinerary_list_fragment"/>
 </navigation>
