@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 
-private const val BASE_URL = "http://0.0.0.0:8081"
+private const val BASE_URL = "http://192.168.56.1:8081"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -21,7 +21,7 @@ private val retrofit = Retrofit.Builder()
 
 interface FindMeApiService {
 
-    @GET("places")
+    @GET("places/1")
     suspend fun getPlaceList(@Query("sort") sort: String? = null): Response<List<Place>>
 
     @GET("api/user/find/{name}")
