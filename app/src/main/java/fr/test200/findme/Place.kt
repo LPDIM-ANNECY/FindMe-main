@@ -5,7 +5,7 @@ enum class RadiusType(val value: Int) {
 }
 
 data class Place (
-    val id: Int,
+    val id: Int = 1,
     val name: String,
     val latitude: Float,
     var longitude: Float,
