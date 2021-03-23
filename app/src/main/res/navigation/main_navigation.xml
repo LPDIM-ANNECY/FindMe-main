@@ -40,4 +40,10 @@
         android:name="fr.test200.findme.itinerary_list.ItineraryList"
         android:label="Itinerary_list"
         tools:layout="@layout/itinerary_list_fragment"/>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="fr.test200.findme.map.MapFragment"
+        android:label="MapFragment"
+        tools:layout="@layout/map_fragment">
+    </fragment>
 </navigation>
