@@ -21,7 +21,7 @@ private val retrofit = Retrofit.Builder()
 
 interface FindMeApiService {
 
-    @GET("places/1")
+    @GET("places/users/1")
     suspend fun getPlaceList(@Query("sort") sort: String? = null): Response<List<Place>>
 
     @GET("api/user/find/{name}")
