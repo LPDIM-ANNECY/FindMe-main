@@ -3,4 +3,5 @@
     <dimen name="title">56sp</dimen>
     <dimen name="connection">20sp</dimen>
     <dimen name="button_label">20sp</dimen>
+    <dimen name="header_title_text">25sp</dimen>
 </resources>
