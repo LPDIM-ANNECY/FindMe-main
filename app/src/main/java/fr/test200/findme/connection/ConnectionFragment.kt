@@ -16,6 +16,7 @@ import fr.test200.findme.R
 import fr.test200.findme.databinding.ConnectionFragmentBinding
 import fr.test200.findme.databinding.RegisterFragmentBinding
 import fr.test200.findme.login.LoginFragmentDirections
+import fr.test200.findme.utils.BottomNavBarIsVisible
 
 class ConnectionFragment : Fragment() {
 
@@ -50,9 +51,7 @@ class ConnectionFragment : Fragment() {
 
         // Show or hide bottom nav bar
         val bottomNavigation = requireActivity().findViewById<View>(R.id.activity_main_bottom_navigation) as BottomNavigationView?
-        bottomNavigation?.let{
-            it.visibility = GONE
-        }
+        BottomNavBarIsVisible(bottomNavigation,false)
 
 
         return binding.root

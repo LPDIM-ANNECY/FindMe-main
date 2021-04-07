@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import fr.test200.findme.R
 import fr.test200.findme.databinding.LoginFragmentBinding
+import fr.test200.findme.utils.BottomNavBarIsVisible
 
 
 class LoginFragment : Fragment() {
@@ -56,9 +57,7 @@ class LoginFragment : Fragment() {
 
         // Show or hide bottom nav bar
         val bottomNavigation = requireActivity().findViewById<View>(R.id.activity_main_bottom_navigation) as BottomNavigationView?
-        bottomNavigation?.let{
-            it.visibility = GONE
-        }
+        BottomNavBarIsVisible(bottomNavigation,false)
 
         return binding.root
 

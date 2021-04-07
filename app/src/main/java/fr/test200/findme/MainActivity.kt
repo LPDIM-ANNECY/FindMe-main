@@ -14,6 +14,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import fr.test200.findme.login.LoginFragmentDirections
+import fr.test200.findme.utils.BottomNavBarBindNavigation
+import fr.test200.findme.utils.BottomNavBarIsVisible
 import kotlinx.android.synthetic.main.main_activity.*
 
 
@@ -21,25 +23,7 @@ class MainActivity : AppCompatActivity()  {
 
     private lateinit var navController: NavController
 
-    //Allow redirection to others fragments when bottom nav bar is pressed
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.action_ways -> {
-                //navController.navigate(R.id.itineraires)
-                return@OnNavigationItemSelectedListener true
 
-            }
-            R.id.action_map -> {
-                //navController.navigate(R.id.carte)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.action_profile -> {
-                //navController.navigate(R.id.profile)
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +32,9 @@ class MainActivity : AppCompatActivity()  {
 
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.activity_main_bottom_navigation)
-        bottomNavigation.visibility = GONE
-        bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        BottomNavBarIsVisible(bottomNavigation,true)
+        BottomNavBarBindNavigation(bottomNavigation)
+
     }
 
 
