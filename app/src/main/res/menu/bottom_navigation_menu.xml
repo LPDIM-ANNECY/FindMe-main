@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:id="@+id/group_nav_bar">
+        <item
+            android:id="@+id/action_ways"
+            android:icon="@drawable/map_location"
+            android:title="@string/nav_bar_itineraires"
+            android:state_checked="false"
+            android:color="@color/design_default_color_on_primary"
+           />
+        <item
+            android:id="@+id/action_map"
+            android:icon="@drawable/planet_earth"
+            android:title="@string/nav_bar_map"
+            android:state_checked="true"
+            android:color="@color/design_default_color_on_primary"
+          />
+        <item
+            android:id="@+id/action_profile"
+            android:icon="@drawable/user"
+            android:title="@string/nav_bar_profile"
+            android:state_checked="false"
+            android:color="@color/design_default_color_on_primary"
+           />
+    </group>
+
+</menu>

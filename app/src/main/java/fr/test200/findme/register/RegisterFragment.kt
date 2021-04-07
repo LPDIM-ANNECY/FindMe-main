@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import fr.test200.findme.R
 import fr.test200.findme.databinding.RegisterFragmentBinding
 import fr.test200.findme.login.LoginFragmentDirections
@@ -42,6 +43,12 @@ class RegisterFragment : Fragment() {
 
         binding.btnConnection.setOnClickListener {
             findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToItineraryList())
+        }
+
+        // Show or hide bottom nav bar
+        val bottomNavigation = requireActivity().findViewById<View>(R.id.activity_main_bottom_navigation) as BottomNavigationView?
+        bottomNavigation?.let{
+            it.visibility = View.VISIBLE
         }
 
         return binding.root

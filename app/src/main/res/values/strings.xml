@@ -7,4 +7,7 @@
     <string name="hint_pseudo">Pseudo</string>
     <string name="hint_password">Mot de passe</string>
     <string name="hint_email">Adresse mail</string>
+    <string name="nav_bar_itineraires">Mes itinéraires</string>
+    <string name="nav_bar_map">Map</string>
+    <string name="nav_bar_profile">Mon Profile</string>
 </resources>
