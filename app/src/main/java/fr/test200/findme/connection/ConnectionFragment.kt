@@ -3,16 +3,20 @@ package fr.test200.findme.connection
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import fr.test200.findme.R
 import fr.test200.findme.databinding.ConnectionFragmentBinding
 import fr.test200.findme.databinding.RegisterFragmentBinding
 import fr.test200.findme.login.LoginFragmentDirections
+import fr.test200.findme.utils.BottomNavBarIsVisible
 
 class ConnectionFragment : Fragment() {
 
@@ -44,6 +48,11 @@ class ConnectionFragment : Fragment() {
         binding.btnConnection.setOnClickListener {
             findNavController().navigate(ConnectionFragmentDirections.actionConnectionFragmentToItineraryList())
         }
+
+        // Show or hide bottom nav bar
+        val bottomNavigation = requireActivity().findViewById<View>(R.id.activity_main_bottom_navigation) as BottomNavigationView?
+        BottomNavBarIsVisible(bottomNavigation,false)
+
 
         return binding.root
     }
