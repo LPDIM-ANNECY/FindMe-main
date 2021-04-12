@@ -40,4 +40,13 @@
         android:name="fr.test200.findme.itinerary_list.ItineraryList"
         android:label="Itinerary_list"
         tools:layout="@layout/itinerary_list_fragment"/>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="fr.test200.findme.profile.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/profile_fragment">
+        <action
+            android:id="@+id/action_loginFragment_to_profile"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>

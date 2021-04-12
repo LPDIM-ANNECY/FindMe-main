@@ -10,4 +10,6 @@
     <string name="nav_bar_itineraires">Mes itinéraires</string>
     <string name="nav_bar_map">Map</string>
     <string name="nav_bar_profile">Mon Profil</string>
+    <string name="profile_title">Mon profil</string>
+    <string name="setting">setting</string>
 </resources>
