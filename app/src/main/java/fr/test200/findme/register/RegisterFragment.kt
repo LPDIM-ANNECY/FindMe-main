@@ -48,7 +48,7 @@ class RegisterFragment : Fragment() {
 
         //bottom nav bar
         val bottomNavigation = requireActivity().findViewById<View>(R.id.activity_main_bottom_navigation) as BottomNavigationView?
-        BottomNavBarIsVisible(bottomNavigation,true)
+        BottomNavBarIsVisible(bottomNavigation,false)
 
         return binding.root
     }

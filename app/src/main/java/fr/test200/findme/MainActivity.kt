@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity()  {
 
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.activity_main_bottom_navigation)
-        BottomNavBarIsVisible(bottomNavigation,true)
+        BottomNavBarIsVisible(bottomNavigation,false)
         BottomNavBarBindNavigation(bottomNavigation)
 
     }
