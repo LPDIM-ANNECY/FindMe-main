@@ -4,28 +4,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import fr.test200.findme.R
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import fr.test200.findme.databinding.MapFragmentBinding
-import fr.test200.findme.login.LoginFragmentDirections
+import fr.test200.findme.R
 
-class MapFragment : Fragment() {
+
+class MapFragment : Fragment(), OnMapReadyCallback  {
     private lateinit var binding: MapFragmentBinding
+    private lateinit var mMap: GoogleMap
+    private var mapFragment : SupportMapFragment?=null
 
     private val viewModel: MapViewModel by viewModels{
         MapViewModelFactory()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
         //region Initialisation Fragment
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.login_fragment,
+            R.layout.map_fragment,
             container,
             false
         )
@@ -34,12 +41,22 @@ class MapFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         //endregion
 
-        // event back pressed
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-            onBackPressed()
+
+        mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+
+        mapFragment?.let{
+            mapFragment?.getMapAsync(this)
         }
 
         return binding.root
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        // Add a marker in Sydney and move the camera
+        val sydney = LatLng(-34.0, 151.0)
+        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
     override fun onPause() {

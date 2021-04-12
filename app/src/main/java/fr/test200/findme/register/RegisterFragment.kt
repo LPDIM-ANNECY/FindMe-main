@@ -43,7 +43,7 @@ class RegisterFragment : Fragment() {
         }
 
         binding.btnConnection.setOnClickListener {
-            findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToItineraryList())
+            findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToMapFragment())
         }
 
         //bottom nav bar

@@ -11,8 +11,8 @@
         android:label="RegisterFragment"
         tools:layout="@layout/register_fragment">
         <action
-            android:id="@+id/action_connectionFragment_to_itinerary_list"
-            app:destination="@id/itinerary_list" />
+            android:id="@+id/action_connectionFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -32,8 +32,8 @@
         android:label="RegisterFragment"
         tools:layout="@layout/register_fragment">
         <action
-            android:id="@+id/action_registerFragment_to_itinerary_list"
-            app:destination="@id/itinerary_list" />
+            android:id="@+id/action_registerFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/itinerary_list"

@@ -3,8 +3,6 @@ package fr.test200.findme.login
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
@@ -21,8 +19,6 @@ class LoginFragment : Fragment() {
 
     private lateinit var binding: LoginFragmentBinding
 
-
-
     private val viewModel: LoginViewModel by viewModels{
         LoginViewModelFactory()
     }
@@ -36,7 +32,6 @@ class LoginFragment : Fragment() {
             container,
             false
         )
-
 
         binding.loginViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -60,7 +55,6 @@ class LoginFragment : Fragment() {
         BottomNavBarIsVisible(bottomNavigation,false)
 
         return binding.root
-
     }
 
     override fun onPause() {
@@ -70,8 +64,6 @@ class LoginFragment : Fragment() {
     override fun onResume() {
         super.onResume()
     }
-
-
 
     private fun onBackPressed() {}
 }
