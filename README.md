@@ -1,5 +1,12 @@
 # Findme
 
+Grâce à notre application, nous souhaitons rendre les visites de monuments plus attractives et plus amusantes.
+<br />Nous visons dans un premier temps la commune d'Annecy.<br />
+Les utilisateurs seront récompensés par un système de "succès" (à la manière de Pokémon Go).
+Chaque monument visité, leurs permettront d’obtenir des goodies (par exemple: réduction sur le prix de places de cinéma, avantages dans certains magasins (commerces locaux), stylo, sac réutilisable…).<br />
+Tous cela sera définit par les offices de tourismes
+De plus, cela peut faciliter les sorties en famille.
+
 Cette application android est développée en Kotlin.
 
 :warning: Important : 
