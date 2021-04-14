@@ -15,6 +15,9 @@ Cette application android est développée en Kotlin.
 
 Le code est crée avec l'architecture MVVM ainsi qu'avec la librairie [Jetpack](https://developer.android.com/jetpack)
 
+Cette application fonctionne en parallèle avec notre [API](https://github.com/LPDIM-ANNECY/FindMe-api) <br />
+Et le données seront insérées depuis notre [site en cours de développement](https://github.com/LPDIM-ANNECY/FindMe-Website)
+
 ### screenshot
 
 Page d'accueil
