@@ -10,7 +10,7 @@ data class Place (
     val latitude: Float,
     var longitude: Float,
     var difficulty: Int,
-    val radius_type: RadiusType,
-    val active: Boolean,
+    val radius_type: Int,
+    val active: Boolean?,
     val user_id: Int?
 )

@@ -28,3 +28,7 @@ Page d'inscription
 Page de connexion
 
 ![Page d'accueil](https://raw.githubusercontent.com/LPDIM-ANNECY/FindMe-main/dev/img/login.png)
+
+Page de profil
+
+![Page d'accueil](https://raw.githubusercontent.com/LPDIM-ANNECY/FindMe-main/dev/img/profile.png)
