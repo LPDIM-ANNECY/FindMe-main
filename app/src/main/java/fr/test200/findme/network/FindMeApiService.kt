@@ -2,8 +2,9 @@ package fr.test200.findme.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import fr.test200.findme.Place
 import fr.test200.findme.dataClass.Category
+import fr.test200.findme.dataClass.Place
+import fr.test200.findme.dataClass.User
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -30,6 +31,10 @@ interface FindMeApiService {
 
     @GET("api/user/find/{name}")
     suspend fun getPlaceByName(@Path("name") username: String): Response<Place>
+
+    @GET("/users/1")
+    suspend fun getUserById() : Response<List<User>>
+
 }
 
 object FindMeApi {
