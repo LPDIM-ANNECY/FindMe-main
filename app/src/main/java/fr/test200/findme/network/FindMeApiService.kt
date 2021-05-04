@@ -3,6 +3,7 @@ package fr.test200.findme.network
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import fr.test200.findme.Place
+import fr.test200.findme.dataClass.Category
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -21,6 +22,9 @@ private val retrofit = Retrofit.Builder()
 
 interface FindMeApiService {
 
+    @GET("categories/")
+    suspend fun getAllCategories(): Response<List<Category>>
+
     @GET("places/users/1")
     suspend fun getPlaceList(@Query("sort") sort: String? = null): Response<List<Place>>
 
@@ -29,6 +33,6 @@ interface FindMeApiService {
 }
 
 object FindMeApi {
-    val userService : FindMeApiService by lazy {
+    val APIService : FindMeApiService by lazy {
         retrofit.create(FindMeApiService::class.java) }
 }

@@ -1,6 +1,5 @@
 package fr.test200.findme.itinerary_list
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,7 +18,7 @@ class ItineraryListViewModel : ViewModel() {
 
     fun getPlaceList() {
         viewModelScope.launch {
-            val isLogin = FindMeApi.userService.getPlaceList()
+            val isLogin = FindMeApi.APIService.getPlaceList()
             isLogin?.let {
                 if (it.isSuccessful){
                     _listPlace.value = it.body()
