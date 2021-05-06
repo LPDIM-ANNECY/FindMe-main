@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#689F38</color>
     <color name="background_bar_xp">#DEDEDE</color>
+    <color name="gray">#CECECE</color>
 </resources>

@@ -25,7 +25,7 @@ object utils {
         false
     }
 
-    fun BottomNavBarIsVisible(bottomNavigation : BottomNavigationView?,isVisible : Boolean){
+    fun bottomNavBarIsVisible(bottomNavigation : BottomNavigationView?, isVisible : Boolean){
 
         bottomNavigation?.let{
             if (isVisible){
