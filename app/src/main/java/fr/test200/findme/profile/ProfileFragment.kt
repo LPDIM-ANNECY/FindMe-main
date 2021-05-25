@@ -1,7 +1,7 @@
 package fr.test200.findme.profile
 
 import android.app.AlertDialog
-import android.content.DialogInterface
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
@@ -23,6 +22,7 @@ import fr.test200.findme.dataClass.Category
 import fr.test200.findme.databinding.ProfileFragmentBinding
 import fr.test200.findme.network.FindMeApi
 import fr.test200.findme.utils.bottomNavBarIsVisible
+import kotlinx.android.synthetic.main.popup_category_places.view.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -67,7 +67,7 @@ class ProfileFragment : Fragment() {
 
         viewModel.allCategories.observe(viewLifecycleOwner, {
             it.forEach { category ->
-                createCardView(category)
+                places?.let { it1 -> createCardView(category, it1) }
             }
         })
 
@@ -90,9 +90,34 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun createCardView(category: Category){
+    private fun createCardViewPlace(context: Context, category: Category, places: List<Place>){
+        val inflater = LayoutInflater.from(context)
+        val placesCards = inflater.inflate(R.layout.card_category_places, null) as CardView
+
+        /*
+        successCards.findViewById<TextView>(R.id.card_name_category).text = category.name
+        successCards.findViewById<ImageView>(R.id.card_success_drawable).setImageResource(getDrawable(category.name))
+        successCards.findViewById<ImageView>(R.id.card_success_drawable)
+        successCards.findViewById<TextView>(R.id.card_nb_success).text = getNbSuccessFormatted(category)*/
+
+
+        val params = ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT)
+        params.setMargins(0, 10, 0, 10)
+        placesCards.layoutParams = params
+        placesCards.setOnClickListener {
+            runBlocking {
+                launch {
+                    //showDialogTrophy(category)
+                }
+            }
+        } // list_category_places
+
+        binding.listSuccessCard.addView(placesCards)
+    }
+
+    private fun createCardView(category: Category, places: List<Place>){
         val inflater = LayoutInflater.from(this.context)
-        val successCards = inflater.inflate(R.layout.success_card,null) as CardView
+        val successCards = inflater.inflate(R.layout.success_card, null) as CardView
 
         successCards.findViewById<TextView>(R.id.card_name_category).text = category.name
         successCards.findViewById<ImageView>(R.id.card_success_drawable).setImageResource(getDrawable(category.name))
@@ -106,17 +131,15 @@ class ProfileFragment : Fragment() {
         successCards.setOnClickListener {
             runBlocking {
                 launch {
-                    showDialog(category)
+                    showDialogTrophy(category)
                 }
             }
-
-            Log.v("click", " identifiant : ${category.id}")
         }
 
         binding.listSuccessCard.addView(successCards)
     }
 
-    private fun showDialog(category: Category) {
+    private fun showDialogTrophy(category: Category) {
         val dialog = AlertDialog.Builder(this.context)
         val dialogView = layoutInflater.inflate(R.layout.popup_category, null, false)
 
@@ -137,7 +160,30 @@ class ProfileFragment : Fragment() {
 
         yesBtn.setOnClickListener {
             alertDialog.dismiss()
+
+            viewModel.getAllPlacesByCategory(category.name)
+            viewModel.allPlacesByCategory.observe(viewLifecycleOwner, { places
+                places?.let { it1 -> showDialogPatrimony(category, it1) }
+            })
+
         }
+
+    }
+
+    private fun showDialogPatrimony(category: Category, places : List<Place>) {
+        val dialog = AlertDialog.Builder(this.context)
+        val dialogView = layoutInflater.inflate(R.layout.popup_category_places, null, false)
+
+        val inflater = LayoutInflater.from(context)
+        val placesCards = inflater.inflate(R.layout.card_category_places, null) as CardView
+
+        dialogView.list_category_places.addView(placesCards)
+
+
+        dialog.setView(dialogView)
+
+        val alertDialog = dialog.create()
+        alertDialog.show()
 
     }
 

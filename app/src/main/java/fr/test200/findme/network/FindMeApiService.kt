@@ -25,6 +25,9 @@ interface FindMeApiService {
     @GET("categories/")
     suspend fun getAllCategories(): Response<List<Category>>
 
+    @GET("places/category/{name}")
+    suspend fun getAllPlacesByCategory(@Path("name") category: String): Response<List<Place>>
+
     @GET("places/users/1")
     suspend fun getPlaceList(@Query("sort") sort: String? = null): Response<List<Place>>
 
