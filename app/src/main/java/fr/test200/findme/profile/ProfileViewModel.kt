@@ -1,8 +1,8 @@
 package fr.test200.findme.profile
 
 import androidx.lifecycle.*
-import fr.test200.findme.Place
 import fr.test200.findme.dataClass.Category
+import fr.test200.findme.dataClass.Place
 import fr.test200.findme.network.FindMeApi
 import kotlinx.coroutines.launch
 
@@ -23,6 +23,10 @@ class ProfileViewModel : ViewModel() {
     val allPlacesByCategory: LiveData<List<Place>>
         get() = _allPlacesByCategory
 
+    private var _allPlacesByUser = MutableLiveData<List<Place>>()
+    val allPlacesByUser: LiveData<List<Place>>
+        get() = _allPlacesByUser
+
     init {
         _eventTryConnection.value = false
         getAllCategories()
@@ -42,6 +46,15 @@ class ProfileViewModel : ViewModel() {
             val places = FindMeApi.APIService.getAllPlacesByCategory(name)
             places.let {
                 _allPlacesByCategory.value = places.body()
+            }
+        }
+    }
+
+    fun getAllPlacesByUser(id : Int) {
+        viewModelScope.launch {
+            val places = FindMeApi.APIService.getPlaceList(id)
+            places.let {
+                _allPlacesByUser.value = places.body()
             }
         }
     }

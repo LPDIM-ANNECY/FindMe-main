@@ -2,7 +2,9 @@ package fr.test200.findme.profile
 
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,9 +18,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import fr.test200.findme.Place
+import fr.test200.findme.Findme
 import fr.test200.findme.R
 import fr.test200.findme.dataClass.Category
+import fr.test200.findme.dataClass.Place
+import fr.test200.findme.dataClass.User
 import fr.test200.findme.databinding.ProfileFragmentBinding
 import fr.test200.findme.network.FindMeApi
 import fr.test200.findme.utils.bottomNavBarIsVisible
@@ -42,7 +46,7 @@ class ProfileFragment : Fragment() {
     ): View {
         runBlocking {
             launch {
-                places = FindMeApi.APIService.getPlaceList().body()
+                places = FindMeApi.APIService.getPlaceList(1).body()
             }
         }
         val bottomNavigation = requireActivity().findViewById<View>(R.id.activity_main_bottom_navigation) as BottomNavigationView?
@@ -55,10 +59,30 @@ class ProfileFragment : Fragment() {
             container,
             false
         )
-
         binding.profileViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         //endregion
+
+        Findme.userRepository.currentUser.observe(viewLifecycleOwner, {
+            try {
+                val picture = it.picture.split(',')[1]
+                val imageBytes = Base64.decode(picture, Base64.DEFAULT)
+                val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                binding.imageAvatar.setImageBitmap(decodedImage)
+            } catch(e: IllegalArgumentException) {
+                Log.d("Base64 avatar", "error format")
+            }
+
+            binding.userNameProfile.text = it.pseudo
+
+            viewModel.getAllPlacesByUser(it.id)
+            viewModel.allPlacesByUser.observe(viewLifecycleOwner, { places
+                val nbVisitedPlace = places?.filter { place -> place.visited == true }?.count()
+                val nbMaxPlaceByCategory = places?.size
+
+                binding.nbTrophee.text = "${nbVisitedPlace.toString()} / ${nbMaxPlaceByCategory.toString()}"
+            })
+        })
 
         // event back pressed
         requireActivity().onBackPressedDispatcher.addCallback(this) {
@@ -170,7 +194,7 @@ class ProfileFragment : Fragment() {
 
     }
 
-    private fun displayUserInfo(user : Profil) {
+    private fun displayUserInfo(user : User) {
 
     }
 
