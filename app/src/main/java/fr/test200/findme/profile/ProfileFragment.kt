@@ -163,10 +163,14 @@ class ProfileFragment : Fragment() {
 
             viewModel.getAllPlacesByCategory(category.name)
             viewModel.allPlacesByCategory.observe(viewLifecycleOwner, { places
-                places?.let { it1 -> showDialogPatrimony(category, it1) }
+                places?.let { it1 -> showDialogPatrimony(category, it1); Log.d("test", it1.toString()) }
             })
 
         }
+
+    }
+
+    private fun displayUserInfo(user : Profil) {
 
     }
 
@@ -176,8 +180,12 @@ class ProfileFragment : Fragment() {
 
         val inflater = LayoutInflater.from(context)
         val placesCards = inflater.inflate(R.layout.card_category_places, null) as CardView
+        val placesCards1 = inflater.inflate(R.layout.card_category_places, null) as CardView
+        val placesCards2 = inflater.inflate(R.layout.card_category_places, null) as CardView
 
         dialogView.list_category_places.addView(placesCards)
+        dialogView.list_category_places.addView(placesCards1)
+        dialogView.list_category_places.addView(placesCards2)
 
 
         dialog.setView(dialogView)

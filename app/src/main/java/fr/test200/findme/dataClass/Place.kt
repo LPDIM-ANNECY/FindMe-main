@@ -1,4 +1,4 @@
-package fr.test200.findme
+package fr.test200.findme.dataClass
 
 enum class RadiusType(val value: Int) {
     Small(0), Normal(1), Large(2), Big(3)

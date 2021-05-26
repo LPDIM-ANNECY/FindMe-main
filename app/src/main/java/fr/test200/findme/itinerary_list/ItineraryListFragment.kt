@@ -10,8 +10,8 @@ import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import fr.test200.findme.Place
 import fr.test200.findme.R
+import fr.test200.findme.dataClass.Place
 import fr.test200.findme.databinding.ItineraryListFragmentBinding
 
 class ItineraryList : Fragment() {
