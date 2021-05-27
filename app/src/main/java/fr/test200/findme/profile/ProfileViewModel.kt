@@ -36,7 +36,7 @@ class ProfileViewModel : ViewModel() {
         viewModelScope.launch {
             val categories = FindMeApi.APIService.getAllCategories()
             categories.let {
-                _allCategories.value = categories.body()
+                _allCategories.value = it.body()
             }
         }
     }
@@ -44,8 +44,9 @@ class ProfileViewModel : ViewModel() {
     fun getAllPlacesByCategory(name : String) {
         viewModelScope.launch {
             val places = FindMeApi.APIService.getAllPlacesByCategory(name)
+            println("PLAAAAAAACES " + places.body()?.size.toString())
             places.let {
-                _allPlacesByCategory.value = places.body()
+                _allPlacesByCategory.value = it.body()
             }
         }
     }
@@ -54,7 +55,7 @@ class ProfileViewModel : ViewModel() {
         viewModelScope.launch {
             val places = FindMeApi.APIService.getPlaceList(id)
             places.let {
-                _allPlacesByUser.value = places.body()
+                _allPlacesByUser.value = it.body()
             }
         }
     }

@@ -11,7 +11,7 @@ class UserRepository {
         get() = _currentUser
 
     fun setUser(user: User?) {
-        _currentUser.postValue(user)
+        _currentUser.postValue(user!!)
     }
 
 }

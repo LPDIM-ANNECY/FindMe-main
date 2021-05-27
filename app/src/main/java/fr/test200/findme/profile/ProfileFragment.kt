@@ -3,6 +3,8 @@ package fr.test200.findme.profile
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.media.Image
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
@@ -26,6 +28,7 @@ import fr.test200.findme.dataClass.User
 import fr.test200.findme.databinding.ProfileFragmentBinding
 import fr.test200.findme.network.FindMeApi
 import fr.test200.findme.utils.bottomNavBarIsVisible
+import kotlinx.android.synthetic.main.card_category_places.view.*
 import kotlinx.android.synthetic.main.popup_category_places.view.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -64,24 +67,7 @@ class ProfileFragment : Fragment() {
         //endregion
 
         Findme.userRepository.currentUser.observe(viewLifecycleOwner, {
-            try {
-                val picture = it.picture.split(',')[1]
-                val imageBytes = Base64.decode(picture, Base64.DEFAULT)
-                val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                binding.imageAvatar.setImageBitmap(decodedImage)
-            } catch(e: IllegalArgumentException) {
-                Log.d("Base64 avatar", "error format")
-            }
-
-            binding.userNameProfile.text = it.pseudo
-
-            viewModel.getAllPlacesByUser(it.id)
-            viewModel.allPlacesByUser.observe(viewLifecycleOwner, { places
-                val nbVisitedPlace = places?.filter { place -> place.visited == true }?.count()
-                val nbMaxPlaceByCategory = places?.size
-
-                binding.nbTrophee.text = "${nbVisitedPlace.toString()} / ${nbMaxPlaceByCategory.toString()}"
-            })
+           displayUserInfo(it)
         })
 
         // event back pressed
@@ -112,31 +98,6 @@ class ProfileFragment : Fragment() {
             "MARCHÉS" -> R.drawable.market
             else -> R.drawable.market
         }
-    }
-
-    private fun createCardViewPlace(context: Context, category: Category, places: List<Place>){
-        val inflater = LayoutInflater.from(context)
-        val placesCards = inflater.inflate(R.layout.card_category_places, null) as CardView
-
-        /*
-        successCards.findViewById<TextView>(R.id.card_name_category).text = category.name
-        successCards.findViewById<ImageView>(R.id.card_success_drawable).setImageResource(getDrawable(category.name))
-        successCards.findViewById<ImageView>(R.id.card_success_drawable)
-        successCards.findViewById<TextView>(R.id.card_nb_success).text = getNbSuccessFormatted(category)*/
-
-
-        val params = ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT)
-        params.setMargins(0, 10, 0, 10)
-        placesCards.layoutParams = params
-        placesCards.setOnClickListener {
-            runBlocking {
-                launch {
-                    //showDialogTrophy(category)
-                }
-            }
-        } // list_category_places
-
-        binding.listSuccessCard.addView(placesCards)
     }
 
     private fun createCardView(category: Category, places: List<Place>){
@@ -186,8 +147,11 @@ class ProfileFragment : Fragment() {
             alertDialog.dismiss()
 
             viewModel.getAllPlacesByCategory(category.name)
-            viewModel.allPlacesByCategory.observe(viewLifecycleOwner, { places
-                places?.let { it1 -> showDialogPatrimony(category, it1); Log.d("test", it1.toString()) }
+            viewModel.allPlacesByCategory.observe(viewLifecycleOwner, {
+                Log.d("allPlacesByCategory", it?.size.toString() )
+                it?.let { it1 ->
+                    showDialogPlaces(category, it1)
+                }
             })
 
         }
@@ -195,28 +159,75 @@ class ProfileFragment : Fragment() {
     }
 
     private fun displayUserInfo(user : User) {
+        try {
+            val picture = user.picture.split(',')[1]
+            val imageBytes = Base64.decode(picture, Base64.DEFAULT)
+            val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+            binding.imageAvatar.setImageBitmap(decodedImage)
+        } catch(e: IllegalArgumentException) {
+            Log.d("Base64 avatar", "error format")
+        }
 
+        binding.userNameProfile.text = user.pseudo
+
+
+        viewModel.getAllPlacesByUser(user.id)
+        viewModel.allPlacesByUser.observe(viewLifecycleOwner, {
+            val nbVisitedPlace = places?.filter { place -> place.visited == true }?.count()
+            val nbMaxPlaceByCategory = places?.size
+
+            binding.nbTrophee.text = "${nbVisitedPlace.toString()} / ${nbMaxPlaceByCategory.toString()}"
+        })
     }
 
-    private fun showDialogPatrimony(category: Category, places : List<Place>) {
+    private fun displayPlacesCard(view: View, places: List<Place>) {
+        val inflater = LayoutInflater.from(context)
+
+        places.forEach {
+            val placeCard = inflater.inflate(R.layout.card_category_places, null) as CardView
+
+            placeCard.popup_category_place_title.text = it.name
+            placeCard.popup_category_place_description.text = it.description?.substring(0, 50) + "..."
+
+            val visited = this.places?.filter { place -> place.id == it.id }?.get(0)?.visited
+            if(visited == true)
+            {
+                placeCard.card_category_places_lock.visibility = View.INVISIBLE
+                placeCard.card_category_places_lock_background.visibility = View.INVISIBLE
+            } else {
+                placeCard.popup_category_place_see_more.visibility = View.INVISIBLE
+            }
+
+
+            if(it.picture?.length!! > 0) {
+                try {
+                    val picture = it.picture?.split(',')?.get(1)
+                    val imageBytes = Base64.decode(picture, Base64.DEFAULT)
+                    val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                    placeCard.card_category_places_image.setImageBitmap(decodedImage)
+                } catch(e: IllegalArgumentException) {
+                    Log.d("Base64 avatar", "error format")
+                }
+            }
+
+
+            view.list_category_places.addView(placeCard)
+        }
+    }
+
+    private var alertDialog : AlertDialog? = null
+    private fun showDialogPlaces(category: Category, places : List<Place>) {
+        alertDialog?.dismiss()
         val dialog = AlertDialog.Builder(this.context)
         val dialogView = layoutInflater.inflate(R.layout.popup_category_places, null, false)
 
-        val inflater = LayoutInflater.from(context)
-        val placesCards = inflater.inflate(R.layout.card_category_places, null) as CardView
-        val placesCards1 = inflater.inflate(R.layout.card_category_places, null) as CardView
-        val placesCards2 = inflater.inflate(R.layout.card_category_places, null) as CardView
+        dialogView.findViewById<TextView>(R.id.popup_category_places_title).text = category.name.toLowerCase()
 
-        dialogView.list_category_places.addView(placesCards)
-        dialogView.list_category_places.addView(placesCards1)
-        dialogView.list_category_places.addView(placesCards2)
-
-
+        displayPlacesCard(dialogView, places)
         dialog.setView(dialogView)
 
-        val alertDialog = dialog.create()
-        alertDialog.show()
-
+        alertDialog = dialog.create()
+        alertDialog?.show()
     }
 
     private fun getInfoSuccess(category: Category): Array<Int?> {
