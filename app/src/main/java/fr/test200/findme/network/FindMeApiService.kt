@@ -30,5 +30,6 @@ interface FindMeApiService {
 
 object FindMeApi {
     val userService : FindMeApiService by lazy {
-        retrofit.create(FindMeApiService::class.java) }
+        retrofit.create(FindMeApiService::class.java)
+    }
 }
