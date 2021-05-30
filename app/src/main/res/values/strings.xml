@@ -12,4 +12,5 @@
     <string name="nav_bar_profile">Mon Profil</string>
     <string name="profile_title">Mon profil</string>
     <string name="setting">setting</string>
+    <string name="buttonBack">Revenir en arrière</string>
 </resources>
