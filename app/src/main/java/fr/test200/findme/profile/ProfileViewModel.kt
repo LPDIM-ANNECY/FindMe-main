@@ -8,12 +8,6 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel : ViewModel() {
 
-    //region Event
-    private val _eventTryConnection = MutableLiveData<Boolean>()
-    val eventTryConnection: LiveData<Boolean>
-        get() = _eventTryConnection
-    //endregion
-
     private var _allCategories = MutableLiveData<List<Category>>()
     val allCategories: LiveData<List<Category>>
         get() = _allCategories
@@ -27,12 +21,17 @@ class ProfileViewModel : ViewModel() {
     val allPlacesByUser: LiveData<List<Place>>
         get() = _allPlacesByUser
 
+    private var _place = MutableLiveData<Place>()
+    val place: LiveData<Place>
+        get() = _place
+
+
+
     init {
-        _eventTryConnection.value = false
         getAllCategories()
     }
 
-    fun getAllCategories() {
+    private fun getAllCategories() {
         viewModelScope.launch {
             val categories = FindMeApi.APIService.getAllCategories()
             categories.let {
@@ -44,7 +43,7 @@ class ProfileViewModel : ViewModel() {
     fun getAllPlacesByCategory(name : String) {
         viewModelScope.launch {
             val places = FindMeApi.APIService.getAllPlacesByCategory(name)
-            println("PLAAAAAAACES " + places.body()?.size.toString())
+
             places.let {
                 _allPlacesByCategory.value = it.body()
             }
@@ -60,10 +59,12 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    /**
-     * Callback called when the ViewModel is destroyed
-     */
-    override fun onCleared() {
-        super.onCleared()
+    fun getPlace(id: Int) {
+        viewModelScope.launch {
+            val place = FindMeApi.APIService.getPlace(id)
+            place.let {
+                _place.value = it.body()?.get(0)
+            }
+        }
     }
 }

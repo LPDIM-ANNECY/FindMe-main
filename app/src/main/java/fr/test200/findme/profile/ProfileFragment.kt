@@ -1,10 +1,7 @@
 package fr.test200.findme.profile
 
 import android.app.AlertDialog
-import android.content.Context
 import android.graphics.BitmapFactory
-import android.media.Image
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
@@ -66,6 +63,8 @@ class ProfileFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         //endregion
 
+        viewModel.getPlace(1)
+
         Findme.userRepository.currentUser.observe(viewLifecycleOwner, {
            displayUserInfo(it)
         })
@@ -77,7 +76,7 @@ class ProfileFragment : Fragment() {
 
         viewModel.allCategories.observe(viewLifecycleOwner, {
             it.forEach { category ->
-                places?.let { it1 -> createCardView(category, it1) }
+                places?.let { createCardView(category) }
             }
         })
 
@@ -100,7 +99,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun createCardView(category: Category, places: List<Place>){
+    private fun createCardView(category: Category){
         val inflater = LayoutInflater.from(this.context)
         val successCards = inflater.inflate(R.layout.success_card, null) as CardView
 
@@ -148,7 +147,6 @@ class ProfileFragment : Fragment() {
 
             viewModel.getAllPlacesByCategory(category.name)
             viewModel.allPlacesByCategory.observe(viewLifecycleOwner, {
-                Log.d("allPlacesByCategory", it?.size.toString() )
                 it?.let { it1 ->
                     showDialogPlaces(category, it1)
                 }
@@ -180,28 +178,63 @@ class ProfileFragment : Fragment() {
         })
     }
 
+    private fun displayPlaceCard(place: Place) {
+        val dialog = AlertDialog.Builder(this.context)
+        val dialogView = layoutInflater.inflate(R.layout.popup_place, null, false)
+
+        viewModel.getPlace(place.id)
+
+        viewModel.place.observe(viewLifecycleOwner, {
+            Log.d("test", it.toString())
+
+            try {
+                val picture = it.picture?.split(',')?.get(1)
+                val imageBytes = Base64.decode(picture, Base64.DEFAULT)
+                val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                dialogView.findViewById<ImageView>(R.id.popup_place_image).setImageBitmap(decodedImage)
+            } catch(e: IllegalArgumentException) {
+                Log.d("Base64 avatar", "error format")
+            }
+
+
+            dialogView.findViewById<TextView>(R.id.popup_place_title).text = it.name
+            dialogView.findViewById<TextView>(R.id.popup_place_description).text = it.description
+        })
+
+        dialog.setView(dialogView)
+
+        val alertDialogPlace = dialog.create()
+        alertDialogPlace?.show()
+    }
+
     private fun displayPlacesCard(view: View, places: List<Place>) {
         val inflater = LayoutInflater.from(context)
 
-        places.forEach {
+        places.forEach { place ->
             val placeCard = inflater.inflate(R.layout.card_category_places, null) as CardView
 
-            placeCard.popup_category_place_title.text = it.name
-            placeCard.popup_category_place_description.text = it.description?.substring(0, 50) + "..."
+            placeCard.popup_category_place_title.text = place.name
+            placeCard.popup_category_place_description.text = place.description?.substring(0, 50) + "..."
 
-            val visited = this.places?.filter { place -> place.id == it.id }?.get(0)?.visited
+            val visited = this.places?.filter { placetmp -> placetmp.id == place.id }?.get(0)?.visited
             if(visited == true)
             {
                 placeCard.card_category_places_lock.visibility = View.INVISIBLE
                 placeCard.card_category_places_lock_background.visibility = View.INVISIBLE
+
+                placeCard.setOnClickListener {
+                    alertDialogPlaces?.dismiss()
+                    displayPlaceCard(place)
+                }
+
             } else {
                 placeCard.popup_category_place_see_more.visibility = View.INVISIBLE
             }
 
 
-            if(it.picture?.length!! > 0) {
+            if(place.picture?.length!! > 0) {
                 try {
-                    val picture = it.picture?.split(',')?.get(1)
+                    val picture = place.picture.split(',')[1]
                     val imageBytes = Base64.decode(picture, Base64.DEFAULT)
                     val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
                     placeCard.card_category_places_image.setImageBitmap(decodedImage)
@@ -215,9 +248,9 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private var alertDialog : AlertDialog? = null
+    private var alertDialogPlaces : AlertDialog? = null
     private fun showDialogPlaces(category: Category, places : List<Place>) {
-        alertDialog?.dismiss()
+        alertDialogPlaces?.dismiss()
         val dialog = AlertDialog.Builder(this.context)
         val dialogView = layoutInflater.inflate(R.layout.popup_category_places, null, false)
 
@@ -226,8 +259,8 @@ class ProfileFragment : Fragment() {
         displayPlacesCard(dialogView, places)
         dialog.setView(dialogView)
 
-        alertDialog = dialog.create()
-        alertDialog?.show()
+        alertDialogPlaces = dialog.create()
+        alertDialogPlaces?.show()
     }
 
     private fun getInfoSuccess(category: Category): Array<Int?> {

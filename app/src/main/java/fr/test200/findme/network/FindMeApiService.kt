@@ -32,6 +32,9 @@ interface FindMeApiService {
     @GET("places/users/{id}")
     suspend fun getPlaceList(@Path("id") id: Int, @Query("sort") sort: String? = null): Response<List<Place>>
 
+    @GET("places/{id}")
+    suspend fun getPlace(@Path("id") id: Int): Response<List<Place>>
+
     @GET("api/user/find/{name}")
     suspend fun getPlaceByName(@Path("name") username: String): Response<Place>
 
