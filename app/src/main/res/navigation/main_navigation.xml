@@ -12,8 +12,8 @@
         android:label="OnBoardingFragment"
         tools:layout="@layout/on_boarding_fragment">
         <action
-            android:id="@+id/action_onBoardingFragment_to_connectionFragment"
-            app:destination="@id/connectionFragment" />
+            android:id="@+id/action_onBoardingFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 
     <fragment

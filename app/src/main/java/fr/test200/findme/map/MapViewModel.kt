@@ -5,13 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.JsonArray
 import fr.test200.findme.BuildConfig
-import fr.test200.findme.Place
+import fr.test200.findme.dataClass.Place
 import fr.test200.findme.network.GoogleMapApi
 import kotlinx.coroutines.launch
 import org.json.JSONArray
-import java.util.logging.Logger
 
 
 class MapViewModel : ViewModel() {
@@ -27,7 +25,16 @@ class MapViewModel : ViewModel() {
         super.onCleared()
     }
 
-    fun getItineraryRequest(placeList: List<Place>) {
+    /*private fun getAllPlacesFromItinerary() {
+        viewModelScope.launch {
+            val places = FindMeApi.APIService.ge()
+            categories.let {
+                _allCategories.value = it.body()
+            }
+        }
+    }*/
+
+    /*fun getItineraryRequest(placeList: List<Place>) {
         val data: MutableMap<String, String> = HashMap()
         var steps: String = "";
 
@@ -55,7 +62,7 @@ class MapViewModel : ViewModel() {
                 }
             }
         }
-    }
+    }*/
 
     fun JSONArray.forEachString(action: (String) -> Unit) {
         for (i in 0 until length()) {

@@ -11,10 +11,12 @@ import androidx.fragment.app.viewModels
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import fr.test200.findme.Place
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import fr.test200.findme.databinding.MapFragmentBinding
 import fr.test200.findme.R
-import fr.test200.findme.RadiusType
+import fr.test200.findme.dataClass.Place
+import fr.test200.findme.dataClass.RadiusType
+import fr.test200.findme.utils
 
 
 class MapFragment : Fragment(), OnMapReadyCallback  {
@@ -31,6 +33,9 @@ class MapFragment : Fragment(), OnMapReadyCallback  {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        val bottomNavigation = requireActivity().findViewById<View>(R.id.activity_main_bottom_navigation) as BottomNavigationView?
+        utils.bottomNavBarIsVisible(bottomNavigation, true)
 
         //region Initialisation Fragment
         binding = DataBindingUtil.inflate(
@@ -52,16 +57,16 @@ class MapFragment : Fragment(), OnMapReadyCallback  {
         }
 
         val placelistahah: MutableList<Place> = mutableListOf();
-        val place = Place(1, "truc", 45.919312596446204,6.15764283942438, 1, RadiusType.Large, false, 1)
-        val place2 = Place(2, "rthf", 45.92213102764319,6.15249647809534, 1, RadiusType.Large, false, 1)
-        val place3 = Place(3, "trdqzsfuc", 45.9244343170087,6.1554796502963836, 1, RadiusType.Large, false, 1)
-        val place4 = Place(4, "qff", 45.92131284183732,6.1534800513713686, 1, RadiusType.Large, false, 1)
+        /*val place = Place(1, "truc", 45.919312596446204,6.15764283942438, 1, 2, false, 1)
+        val place2 = Place(2, "rthf", 45.92213102764319,6.15249647809534, 1, 2, false, 1)
+        val place3 = Place(3, "trdqzsfuc", 45.9244343170087,6.1554796502963836, 1, 2, false, 1)
+        val place4 = Place(4, "qff", 45.92131284183732,6.1534800513713686, 1, 2, false, 1)
         placelistahah.add(place);
         placelistahah.add(place2);
         placelistahah.add(place3);
-        placelistahah.add(place4);
+        placelistahah.add(place4);*/
 
-        val requestResult = viewModel.getItineraryRequest(placelistahah)
+        //val requestResult = viewModel.getItineraryRequest(placelistahah)
         //viewModel.createItinerary(requestResult)
 
         //region Observer

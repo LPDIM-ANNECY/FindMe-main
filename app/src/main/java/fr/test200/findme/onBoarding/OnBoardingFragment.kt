@@ -51,7 +51,7 @@ class OnBoardingFragment : Fragment() {
 
 
         if (restorePrefData() != null && restorePrefData() == true) {
-            findNavController().navigate(OnBoardingFragmentDirections.actionOnBoardingFragmentToConnectionFragment ())
+            findNavController().navigate(OnBoardingFragmentDirections.actionOnBoardingFragmentToLoginFragment ())
         }
 
         // event back pressed
@@ -64,7 +64,7 @@ class OnBoardingFragment : Fragment() {
         utils.bottomNavBarIsVisible(bottomNavigation, false)
 
         binding.btnOnBoardingSuivant.setOnClickListener {
-            findNavController().navigate(OnBoardingFragmentDirections.actionOnBoardingFragmentToConnectionFragment ())
+            findNavController().navigate(OnBoardingFragmentDirections.actionOnBoardingFragmentToLoginFragment ())
             savePrefsData()
         }
 
@@ -119,7 +119,7 @@ class OnBoardingFragment : Fragment() {
             position++
             pager.currentItem = position
         }else{
-            findNavController().navigate(OnBoardingFragmentDirections.actionOnBoardingFragmentToConnectionFragment())
+            findNavController().navigate(OnBoardingFragmentDirections.actionOnBoardingFragmentToLoginFragment())
         }
     }
 

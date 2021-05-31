@@ -28,10 +28,10 @@ class MainActivity : AppCompatActivity()  {
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.action_ways -> {
-                    //return@setOnNavigationItemSelectedListener navigateFragmentId(bottomNavigation, it.itemId, R.id.profileFragment)
+                    return@setOnNavigationItemSelectedListener navigateFragmentId(bottomNavigation, it.itemId, R.id.itinerary_list)
                 }
                 R.id.action_map -> {
-                    //return@setOnNavigationItemSelectedListener navigateFragmentId(bottomNavigation, it.itemId, R.id.profileFragment)
+                    return@setOnNavigationItemSelectedListener navigateFragmentId(bottomNavigation, it.itemId, R.id.mapFragment)
                 }
                 R.id.action_profile -> {
                     return@setOnNavigationItemSelectedListener navigateFragmentId(bottomNavigation, it.itemId, R.id.profileFragment)
