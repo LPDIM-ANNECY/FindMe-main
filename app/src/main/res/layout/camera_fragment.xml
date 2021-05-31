@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="CameraViewModel"
+            type="fr.test200.findme.camera.CameraViewModel" />
+    </data>
+
+    <FrameLayout
+        android:id="@+id/camera_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.camera.view.PreviewView
+            android:id="@+id/fragment_camera_preview_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+        </androidx.camera.view.PreviewView>
+
+        <ProgressBar
+            android:id="@+id/fragment_camera_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="#FDD835"
+            android:layout_gravity="center"
+            android:visibility="visible" />
+
+    </FrameLayout>
+
+</layout>

@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "fr.test200.findme"
-        minSdkVersion 29
+        minSdkVersion 28
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -70,4 +70,12 @@ dependencies {
     implementation 'com.google.android:flexbox:2.0.1'
 
     testImplementation 'junit:junit:4.13.2'
+
+    // CameraX
+    implementation "androidx.camera:camera-camera2:1.0.0-beta11"
+    implementation "androidx.camera:camera-lifecycle:1.0.0-beta11"
+    implementation "androidx.camera:camera-view:1.0.0-alpha18"
+
+    // MLKit
+    implementation 'com.google.mlkit:barcode-scanning:16.0.3'
 }
