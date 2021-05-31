@@ -30,5 +30,16 @@
         <item name="android:paddingVertical">5dp</item>
         <item name="android:paddingStart">20dp</item>
     </style>
+    <style
+        name="name_profile">
+        <item name="android:textSize">@dimen/name_profile</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 
+    <style name="nb_trophee">
+        <item name="android:textSize">@dimen/nb_trophee</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <dimen name="nb_trophee">16dp</dimen>
 </resources>

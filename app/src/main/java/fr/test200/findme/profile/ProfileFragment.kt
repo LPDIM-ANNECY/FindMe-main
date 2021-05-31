@@ -1,4 +1,4 @@
-package fr.test200.findme.register
+package fr.test200.findme.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,18 +9,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import fr.test200.findme.R
-import fr.test200.findme.databinding.RegisterFragmentBinding
-import fr.test200.findme.login.LoginFragmentDirections
-import fr.test200.findme.utils.BottomNavBarIsVisible
+import fr.test200.findme.databinding.ProfileFragmentBinding
 
-class RegisterFragment : Fragment() {
+class ProfileFragment : Fragment() {
 
-    private lateinit var binding: RegisterFragmentBinding
+    private lateinit var binding: ProfileFragmentBinding
 
-    private val viewModel: RegisterViewModel by viewModels{
-        RegisterViewModelFactory()
+    private val viewModel: ProfileViewModel by viewModels{
+        ProfileViewModelFactory()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -28,12 +25,12 @@ class RegisterFragment : Fragment() {
         //region Initialisation Fragment
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.register_fragment,
+            R.layout.profile_fragment,
             container,
             false
         )
 
-        binding.registerViewModel = viewModel
+        binding.profileViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         //endregion
 
@@ -42,13 +39,10 @@ class RegisterFragment : Fragment() {
             onBackPressed()
         }
 
-        binding.btnConnection.setOnClickListener {
-            findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToMapFragment())
-        }
-
-        //bottom nav bar
-        val bottomNavigation = requireActivity().findViewById<View>(R.id.activity_main_bottom_navigation) as BottomNavigationView?
-        BottomNavBarIsVisible(bottomNavigation,false)
+        /*
+        binding.btnProfile.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionLoginFragmentToProfile())
+        }*/
 
         return binding.root
     }

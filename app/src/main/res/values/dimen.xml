@@ -4,4 +4,5 @@
     <dimen name="connection">20sp</dimen>
     <dimen name="button_label">20sp</dimen>
     <dimen name="header_title_text">25sp</dimen>
+    <dimen name="name_profile">16sp</dimen>
 </resources>
