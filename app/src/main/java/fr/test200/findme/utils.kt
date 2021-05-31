@@ -1,31 +1,17 @@
 package fr.test200.findme
 
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import fr.test200.findme.itinerary_list.ItineraryListDirections
+import fr.test200.findme.profile.ProfileFragment
 
 object utils {
 
-    //Allow redirection to others fragments when bottom nav bar is pressed
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.action_ways -> {
-                //navController.navigate(R.id.itineraires)
-                return@OnNavigationItemSelectedListener true
-
-            }
-            R.id.action_map -> {
-                //navController.navigate(R.id.carte)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.action_profile -> {
-                //navController.navigate(R.id.profile)
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
-
-    fun bottomNavBarIsVisible(bottomNavigation : BottomNavigationView?, isVisible : Boolean){
+    fun bottomNavBarIsVisible(bottomNavigation : BottomNavigationView?, isVisible : Boolean = true){
 
         bottomNavigation?.let{
             if (isVisible){
@@ -36,7 +22,4 @@ object utils {
         }
     }
 
-    fun BottomNavBarBindNavigation(bottomNavigation : BottomNavigationView?){
-        bottomNavigation?.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-    }
 }

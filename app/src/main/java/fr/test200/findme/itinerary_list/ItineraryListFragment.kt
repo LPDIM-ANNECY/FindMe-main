@@ -13,9 +13,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import fr.test200.findme.R
 import fr.test200.findme.dataClass.Place
 import fr.test200.findme.databinding.ItineraryListFragmentBinding
+import fr.test200.findme.utils
 
 class ItineraryList : Fragment() {
 
@@ -66,6 +68,10 @@ class ItineraryList : Fragment() {
             }
         }
         //endregion
+
+        //bottom nav bar
+        val bottomNavigation = requireActivity().findViewById<View>(R.id.activity_main_bottom_navigation) as BottomNavigationView?
+        utils.bottomNavBarIsVisible(bottomNavigation)
 
         return binding.root
     }

@@ -68,7 +68,7 @@ class CameraFragment : Fragment() {
 
         //bottom nav bar
         val bottomNavigation = requireActivity().findViewById<View>(R.id.activity_main_bottom_navigation) as BottomNavigationView?
-        utils.BottomNavBarIsVisible(bottomNavigation, false)
+        utils.bottomNavBarIsVisible(bottomNavigation, false)
 
         //Progress bar
         viewModel.progressState.observe(viewLifecycleOwner, {

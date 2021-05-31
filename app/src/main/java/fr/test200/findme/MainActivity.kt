@@ -6,7 +6,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import fr.test200.findme.utils.BottomNavBarBindNavigation
 import fr.test200.findme.utils.bottomNavBarIsVisible
 import fr.test200.findme.network.FindMeApi
 
@@ -23,9 +22,27 @@ class MainActivity : AppCompatActivity()  {
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.activity_main_bottom_navigation)
         bottomNavBarIsVisible(bottomNavigation,false)
-        BottomNavBarBindNavigation(bottomNavigation)
 
         getUserInfo()
+
+        bottomNavigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.action_ways -> {
+                    //return@setOnNavigationItemSelectedListener navigateFragmentId(bottomNavigation, it.itemId, R.id.profileFragment)
+                }
+                R.id.action_map -> {
+                    //return@setOnNavigationItemSelectedListener navigateFragmentId(bottomNavigation, it.itemId, R.id.profileFragment)
+                }
+                R.id.action_profile -> {
+                    return@setOnNavigationItemSelectedListener navigateFragmentId(bottomNavigation, it.itemId, R.id.profileFragment)
+                }
+            }
+            return@setOnNavigationItemSelectedListener false
+        }
+        /*bottomNavigation.setOnNavigationItemReselectedListener {
+
+        }*/
+
     }
 
     private fun getUserInfo() {
@@ -37,6 +54,14 @@ class MainActivity : AppCompatActivity()  {
                 }
             }
         }
+    }
+
+    private fun navigateFragmentId(bottomNavigation : BottomNavigationView, idItem : Int, idFragment : Int): Boolean {
+        if(bottomNavigation.selectedItemId != idItem) {
+            navController.navigate(idFragment)
+            return true
+        }
+        return false
     }
 
 }
