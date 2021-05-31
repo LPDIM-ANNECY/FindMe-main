@@ -6,6 +6,7 @@
     app:startDestination="@id/mapFragment">
 
     <fragment
+
         android:id="@+id/connectionFragment"
         android:name="fr.test200.findme.connection.ConnectionFragment"
         android:label="RegisterFragment"

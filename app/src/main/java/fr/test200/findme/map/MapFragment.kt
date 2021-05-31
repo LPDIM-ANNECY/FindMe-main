@@ -61,12 +61,11 @@ class MapFragment : Fragment(), OnMapReadyCallback  {
         placelistahah.add(place3);
         placelistahah.add(place4);
 
-        viewModel.getItinerary(placelistahah)
+        val requestResult = viewModel.getItineraryRequest(placelistahah)
+        //viewModel.createItinerary(requestResult)
 
         //region Observer
-        viewModel.itinerary.observe(viewLifecycleOwner, {
-            Log.d("TAG", it)
-        })
+        viewModel.itinerary.observe(viewLifecycleOwner, {})
 
         return binding.root
     }

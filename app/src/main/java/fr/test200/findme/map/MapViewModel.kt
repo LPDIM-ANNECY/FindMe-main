@@ -1,21 +1,23 @@
 package fr.test200.findme.map
 
-import android.provider.Settings.Global.getString
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.JsonArray
 import fr.test200.findme.BuildConfig
 import fr.test200.findme.Place
-import fr.test200.findme.R
-import fr.test200.findme.network.FindMeApi
 import fr.test200.findme.network.GoogleMapApi
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import java.util.logging.Logger
+
 
 class MapViewModel : ViewModel() {
 
-    private val _itinerary = MutableLiveData<String>()
-    val itinerary: LiveData<String>
+    private val _itinerary = MutableLiveData<JSONArray>()
+    val itinerary: LiveData<JSONArray>
         get() = _itinerary
 
     /**
@@ -25,7 +27,7 @@ class MapViewModel : ViewModel() {
         super.onCleared()
     }
 
-    fun getItinerary(placeList: List<Place>) {
+    fun getItineraryRequest(placeList: List<Place>) {
         val data: MutableMap<String, String> = HashMap()
         var steps: String = "";
 
@@ -35,7 +37,7 @@ class MapViewModel : ViewModel() {
 
         for (place in placeList) {
             if(place.id != 0 && place.id != placeList.size - 1) {
-                steps += "via:" + place.latitude.toString() + "/" + place.longitude.toString() + "|"
+                steps += "via:" + place.latitude.toString() + "," + place.longitude.toString() + "|"
             }
         }
         steps.substring(steps.length - 1)
@@ -44,12 +46,26 @@ class MapViewModel : ViewModel() {
         data["key"] = BuildConfig.GOOGLE_MAPS_API_KEY
 
         viewModelScope.launch {
-            val isLogin = GoogleMapApi.mapService.getItinerary(data)
-            isLogin?.let {
+            val itinerary_array = GoogleMapApi.mapService.getItinerary(data);
+            Log.d("test", itinerary_array.toString());
+            itinerary_array?.let {
                 if (it.isSuccessful){
-                    _itinerary.value = it.body()
+                    //_itinerary.value = it.body();
+                    createItinerary(it.body());
                 }
             }
+        }
+    }
+
+    fun JSONArray.forEachString(action: (String) -> Unit) {
+        for (i in 0 until length()) {
+            action(getString(i))
+        }
+    }
+
+    fun createItinerary(jsonRequestResult: JSONArray?) {
+        jsonRequestResult?.forEachString { item ->
+            Log.d("item", item);
         }
     }
 }
