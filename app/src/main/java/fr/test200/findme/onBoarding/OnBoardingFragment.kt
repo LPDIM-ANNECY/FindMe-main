@@ -50,9 +50,9 @@ class OnBoardingFragment : Fragment() {
 
 
 
-     /*   if (restorePrefData() != null && restorePrefData() == true) {
+        if (restorePrefData() != null && restorePrefData() == true) {
             findNavController().navigate(OnBoardingFragmentDirections.actionOnBoardingFragmentToConnectionFragment ())
-        }*/
+        }
 
         // event back pressed
         requireActivity().onBackPressedDispatcher.addCallback(this) {
@@ -61,7 +61,7 @@ class OnBoardingFragment : Fragment() {
 
         // Show or hide bottom nav bar
         val bottomNavigation = requireActivity().findViewById<View>(R.id.activity_main_bottom_navigation) as BottomNavigationView?
-        utils.BottomNavBarIsVisible(bottomNavigation, false)
+        utils.bottomNavBarIsVisible(bottomNavigation, false)
 
         binding.btnOnBoardingSuivant.setOnClickListener {
             findNavController().navigate(OnBoardingFragmentDirections.actionOnBoardingFragmentToConnectionFragment ())
@@ -98,13 +98,13 @@ class OnBoardingFragment : Fragment() {
 
     private fun restorePrefData(): Boolean? {
         val pref: SharedPreferences? = context?.getSharedPreferences("myPrefs", MODE_PRIVATE)
-        return pref?.getBoolean("isIntroOpnendd", false)
+        return pref?.getBoolean("isIntroOpnend", false)
     }
 
     private fun savePrefsData() {
         val pref: SharedPreferences? = context?.getSharedPreferences("myPrefs", MODE_PRIVATE)
         val editor = pref?.edit()
-        editor?.putBoolean("isIntroOpnendd", true)
+        editor?.putBoolean("isIntroOpnend", true)
         editor?.commit()
     }
 

@@ -1,25 +1,13 @@
 package fr.test200.findme
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.View.GONE
-import android.widget.Toast
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import fr.test200.findme.login.LoginFragmentDirections
+import fr.test200.findme.utils.bottomNavBarIsVisible
 import fr.test200.findme.network.FindMeApi
-import fr.test200.findme.utils.BottomNavBarBindNavigation
-import fr.test200.findme.utils.BottomNavBarIsVisible
-import kotlinx.android.synthetic.main.main_activity.*
-import kotlinx.coroutines.coroutineScope
 
 
 class MainActivity : AppCompatActivity()  {
@@ -33,10 +21,28 @@ class MainActivity : AppCompatActivity()  {
 
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.activity_main_bottom_navigation)
-        BottomNavBarIsVisible(bottomNavigation,false)
-        BottomNavBarBindNavigation(bottomNavigation)
+        bottomNavBarIsVisible(bottomNavigation,false)
 
         getUserInfo()
+
+        bottomNavigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.action_ways -> {
+                    //return@setOnNavigationItemSelectedListener navigateFragmentId(bottomNavigation, it.itemId, R.id.profileFragment)
+                }
+                R.id.action_map -> {
+                    //return@setOnNavigationItemSelectedListener navigateFragmentId(bottomNavigation, it.itemId, R.id.profileFragment)
+                }
+                R.id.action_profile -> {
+                    return@setOnNavigationItemSelectedListener navigateFragmentId(bottomNavigation, it.itemId, R.id.profileFragment)
+                }
+            }
+            return@setOnNavigationItemSelectedListener false
+        }
+        /*bottomNavigation.setOnNavigationItemReselectedListener {
+
+        }*/
+
     }
 
     private fun getUserInfo() {
@@ -48,6 +54,14 @@ class MainActivity : AppCompatActivity()  {
                 }
             }
         }
+    }
+
+    private fun navigateFragmentId(bottomNavigation : BottomNavigationView, idItem : Int, idFragment : Int): Boolean {
+        if(bottomNavigation.selectedItemId != idItem) {
+            navController.navigate(idFragment)
+            return true
+        }
+        return false
     }
 
 }

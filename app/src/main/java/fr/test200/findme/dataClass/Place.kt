@@ -12,5 +12,9 @@ data class Place (
     var difficulty: Int,
     val radius_type: Int,
     val active: Boolean?,
-    val user_id: Int?
+    val description: String?,
+    val user_id: Int?,
+    val visited: Boolean?,
+    val category_id: Int?,
+    val picture: String?
 )

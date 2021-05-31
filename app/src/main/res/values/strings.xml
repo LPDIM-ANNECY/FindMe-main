@@ -20,4 +20,6 @@
     <string name="onboarding_desc_1">Find me , l\'application des sorties entre amis.Découvrez ou re découvrez le patrimoine locale de votre ville tout en vous amusant !</string>
     <string name="onboarding_desc_2">Selectionnez l\'itinéraire qui vous convient ! Amusez vous en famille ou entre amis !</string>
     <string name="onboarding_desc_3">Recuperez des goodies dans l\'office de tourisme la plus proche !</string>
+    <string name="popup_category_see_monuments">Voir tout les monuments</string>
+    <string name="buttonBack">Revenir en arrière</string>
 </resources>

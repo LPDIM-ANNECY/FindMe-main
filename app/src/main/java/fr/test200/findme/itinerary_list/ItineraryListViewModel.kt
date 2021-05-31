@@ -18,7 +18,7 @@ class ItineraryListViewModel : ViewModel() {
 
     fun getPlaceList() {
         viewModelScope.launch {
-            val isLogin = FindMeApi.APIService.getPlaceList()
+            val isLogin = FindMeApi.APIService.getPlaceList(1)
             isLogin?.let {
                 if (it.isSuccessful){
                     _listPlace.value = it.body()
