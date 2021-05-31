@@ -3,7 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/profileFragment">
+    app:startDestination="@id/onBoardingFragment">
+
+
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="fr.test200.findme.onBoarding.OnBoardingFragment"
+        android:label="OnBoardingFragment"
+        tools:layout="@layout/on_boarding_fragment">
+        <action
+            android:id="@+id/action_onBoardingFragment_to_connectionFragment"
+            app:destination="@id/connectionFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/connectionFragment"
@@ -39,7 +50,18 @@
         android:id="@+id/itinerary_list"
         android:name="fr.test200.findme.itinerary_list.ItineraryList"
         android:label="Itinerary_list"
-        tools:layout="@layout/itinerary_list_fragment"/>
+        tools:layout="@layout/itinerary_list_fragment">
+        <argument
+            android:name="qrcodeResponse"
+            app:argType="string"
+            android:defaultValue="0" />
+
+        <action
+            android:id="@+id/action_itinerary_listFragment_to_camera"
+            app:destination="@id/cameraFragment" />
+    </fragment>
+
+
     <fragment
         android:id="@+id/mapFragment"
         android:name="fr.test200.findme.map.MapFragment"
@@ -54,5 +76,16 @@
         <action
             android:id="@+id/action_loginFragment_to_profile"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="fr.test200.findme.camera.CameraFragment"
+        android:label="CameraFragment"
+        tools:layout="@layout/camera_fragment">
+
+        <action
+            android:id="@+id/action_camera_to_itinerary_listFragment"
+            app:destination="@id/itinerary_list">
+        </action>
     </fragment>
 </navigation>

@@ -5,22 +5,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import fr.test200.findme.Place
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import fr.test200.findme.R
+import fr.test200.findme.dataClass.Place
 import fr.test200.findme.databinding.ItineraryListFragmentBinding
+import fr.test200.findme.utils
 
 class ItineraryList : Fragment() {
 
     private lateinit var binding: ItineraryListFragmentBinding
 
+    private val args: ItineraryListArgs by navArgs()
+
     private val viewModel: ItineraryListViewModel by viewModels{
         ItineraryListViewModelFactory()
     }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -41,13 +49,29 @@ class ItineraryList : Fragment() {
             onBackPressed()
         }
 
-        viewModel.getPlaceList()
+        binding.goToCamera.setOnClickListener {
+            findNavController().navigate(ItineraryListDirections.actionItineraryListFragmentToCamera())
+        }
 
         //region Observer
         viewModel.listPlace.observe(viewLifecycleOwner, {
             createPlaceCards(it)
         })
         //endregion
+
+        //region args
+        val qrcodeResponse = args.qrcodeResponse
+
+        qrcodeResponse?.let {
+            if (qrcodeResponse != "0") {
+                Toast.makeText(this.context, qrcodeResponse, Toast.LENGTH_LONG).show()
+            }
+        }
+        //endregion
+
+        //bottom nav bar
+        val bottomNavigation = requireActivity().findViewById<View>(R.id.activity_main_bottom_navigation) as BottomNavigationView?
+        utils.bottomNavBarIsVisible(bottomNavigation)
 
         return binding.root
     }
