@@ -56,21 +56,19 @@ class MapFragment : Fragment(), OnMapReadyCallback  {
             mapFragment?.getMapAsync(this)
         }
 
-        val placelistahah: MutableList<Place> = mutableListOf();
-        /*val place = Place(1, "truc", 45.919312596446204,6.15764283942438, 1, 2, false, 1)
-        val place2 = Place(2, "rthf", 45.92213102764319,6.15249647809534, 1, 2, false, 1)
-        val place3 = Place(3, "trdqzsfuc", 45.9244343170087,6.1554796502963836, 1, 2, false, 1)
-        val place4 = Place(4, "qff", 45.92131284183732,6.1534800513713686, 1, 2, false, 1)
-        placelistahah.add(place);
-        placelistahah.add(place2);
-        placelistahah.add(place3);
-        placelistahah.add(place4);*/
+        viewModel.getAllPlacesFromItinerary(1)
 
-        //val requestResult = viewModel.getItineraryRequest(placelistahah)
-        //viewModel.createItinerary(requestResult)
+        viewModel.places.observe(viewLifecycleOwner, {
+            it?.let { placeList ->
+                viewModel.getItineraryRequest(placeList)
+            }
+        })
 
-        //region Observer
-        viewModel.itinerary.observe(viewLifecycleOwner, {})
+        viewModel.itinerary.observe(viewLifecycleOwner, {
+            it?.let { requestContent ->
+                //viewModel.createItinerary(requestContent);
+            }
+        })
 
         return binding.root
     }

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.test200.findme.BuildConfig
 import fr.test200.findme.dataClass.Place
+import fr.test200.findme.network.FindMeApi
 import fr.test200.findme.network.GoogleMapApi
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -14,9 +15,13 @@ import org.json.JSONArray
 
 class MapViewModel : ViewModel() {
 
-    private val _itinerary = MutableLiveData<JSONArray>()
-    val itinerary: LiveData<JSONArray>
+    private val _itinerary = MutableLiveData<String>()
+    val itinerary: LiveData<String>
         get() = _itinerary
+
+    private val _allplaces = MutableLiveData<List<Place>>()
+    val places: LiveData<List<Place>>
+        get() = _allplaces
 
     /**
      * Callback called when the ViewModel is destroyed
@@ -25,20 +30,20 @@ class MapViewModel : ViewModel() {
         super.onCleared()
     }
 
-    /*private fun getAllPlacesFromItinerary() {
+    fun getAllPlacesFromItinerary(itineraryId: Int) {
         viewModelScope.launch {
-            val places = FindMeApi.APIService.ge()
-            categories.let {
-                _allCategories.value = it.body()
+            val places = FindMeApi.APIService.getPlacesByItinerary(itineraryId)
+            places.let {
+                _allplaces.value = it.body()
             }
         }
-    }*/
+    }
 
-    /*fun getItineraryRequest(placeList: List<Place>) {
+    fun getItineraryRequest(placeList: List<Place>) {
         val data: MutableMap<String, String> = HashMap()
         var steps: String = "";
 
-        data["origin"] = placeList.first().latitude.toString() + "," + placeList.first().longitude.toString()
+                data["origin"] = placeList.first().latitude.toString() + "," + placeList.first().longitude.toString()
         data["destination"] = placeList.last().latitude.toString() + "," + placeList.last().longitude.toString()
         data["mode"] = "walking"
 
@@ -53,16 +58,16 @@ class MapViewModel : ViewModel() {
         data["key"] = BuildConfig.GOOGLE_MAPS_API_KEY
 
         viewModelScope.launch {
-            val itinerary_array = GoogleMapApi.mapService.getItinerary(data);
-            Log.d("test", itinerary_array.toString());
-            itinerary_array?.let {
-                if (it.isSuccessful){
-                    //_itinerary.value = it.body();
-                    createItinerary(it.body());
+            val itineraryArray = GoogleMapApi.mapService.getItinerary(data)
+            Log.d("test", itineraryArray.toString())
+            itineraryArray?.let {
+                if (it.isSuccessful) {
+                    it.body()?.let { it1 -> Log.d("test", it1.toString()) }
+                    _itinerary.value = it.body().toString()
                 }
             }
         }
-    }*/
+    }
 
     fun JSONArray.forEachString(action: (String) -> Unit) {
         for (i in 0 until length()) {

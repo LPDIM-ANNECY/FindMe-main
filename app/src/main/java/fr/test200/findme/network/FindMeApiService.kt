@@ -39,6 +39,9 @@ interface FindMeApiService {
     @GET("/users/1")
     suspend fun getUserById() : Response<List<User>>
 
+    @GET("/itineraries/{id}")
+    suspend fun getPlacesByItinerary(@Path("id") id: Int) : Response<List<Place>>
+
     @FormUrlEncoded
     @POST("/userItinerary/visited")
     suspend fun addUserItinerary(@Field("placeId") placeId: Int, @Field("userId") userId: Int): Response<List<UserItineraryResponse>>
